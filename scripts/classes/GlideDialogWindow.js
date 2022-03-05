@@ -48,9 +48,7 @@ var GlideDialogWindow = Class.create(GlideWindow, {
   },
   disableFocusTrap: function () {
     if (!this.focusTrap) return;
-    this.focusTrap.deactivate({
-      returnFocus: true,
-    });
+    this.focusTrap.deactivate({ returnFocus: true });
     this.focusTrap = null;
   },
   setBody: function (html, noEvaluate, setAlt) {

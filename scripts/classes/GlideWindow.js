@@ -246,6 +246,7 @@ var GlideWindow = Class.create(GwtObservable, {
       div.setAttribute('dragpart', id);
       div.setAttribute('aria-labelledby', id + '_header_contents');
       div.setAttribute('sn-atf-area', id);
+      div.setAttribute('sn-atf-whitelist', 'true');
       div.className += ' drag_section_part';
       div.style.position = this.getPosition();
       div.style.zIndex = this.getZIndex();

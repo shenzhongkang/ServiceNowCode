@@ -40,9 +40,9 @@ function onSelChange(elementName, fromSetTemplateValue) {
   var elementId = elementName;
   var includesSysSelect = elementName.indexOf('sys_select.') === 0;
   if (includesSysSelect) elementId = elementName.replace('sys_select.', '');
-  var df = new DerivedFields(elementId);
+  var df = new DerivedFields(elementId, gel(elementName).value);
   df.clearRelated();
-  df.updateRelated(gel(elementName).value);
+  df.updateRelated();
   var vName = 'ni.dependent.' + getNameFromElement(elementId);
   var eDeps = document.getElementsByName(vName);
   jslog('*************---->' + eDeps.length);
@@ -54,6 +54,8 @@ function onSelChange(elementName, fromSetTemplateValue) {
       eval(f.nodeValue);
       continue;
     }
+    if (df.isDerivedWaitingClearValue() && eDep.hasAttribute('data-ref-qual'))
+      continue;
     var name = eDep.value;
     var eChanged = gel(elementName);
     var value;
@@ -87,6 +89,22 @@ function onSelChange(elementName, fromSetTemplateValue) {
     ajax.addParam('sysparm_name', name);
     ajax.addParam('sysparm_chars', '*');
     ajax.addParam('sysparm_nomax', 'true');
+    if (
+      'true' == eDep.getAttribute('data-ref-qual') &&
+      typeof g_form !== 'undefined'
+    ) {
+      if (
+        g_form.isNewRecord() ||
+        _hasEmptyAncestor(g_form._removeTableName(name))
+      )
+        ajax.addEncodedString(g_form.serialize());
+      else {
+        var encoded = g_form.serializeChangedAll();
+        if (!gel(elementId).changed)
+          encoded += g_form._serializeElement(elementId);
+        ajax.addEncodedString(encoded);
+      }
+    }
     var scopeElement = gel('sysparm_domain_scope');
     if (scopeElement && scopeElement.value) {
       ajax.addParam('sysparm_domain_scope', scopeElement.value);
@@ -103,6 +121,10 @@ function onSelChange(elementName, fromSetTemplateValue) {
       ajax.getXML(retFunc, null, eChanged);
     }
   }
+}
+function _hasEmptyAncestor(v) {
+  var name = v.substring(0, v.lastIndexOf('.'));
+  return !!name && (g_form.getValue(name) == '' || _hasEmptyAncestor(name));
 }
 function isReferenceType(name) {
   return getDataType(name) == 'glide_element_reference_choice';
@@ -157,7 +179,6 @@ function selResponse(request, containsSysSelect, fromSetTemplateValue) {
         currentValue = '';
       }
     }
-    if (isSelect2) $j(select).trigger('change');
   }
   if (select['onchange'])
     select.onchange.call(select, null, fromSetTemplateValue);

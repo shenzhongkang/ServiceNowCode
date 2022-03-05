@@ -41,11 +41,7 @@ var GlideRecord = Class.create({
       fOper = arguments[1];
       fValue = arguments[2];
     }
-    this.conditions.push({
-      name: fName,
-      oper: fOper,
-      value: fValue,
-    });
+    this.conditions.push({ name: fName, oper: fOper, value: fValue });
   },
   setEncodedQuery: function (queryString) {
     this.encodedQuery = queryString;
@@ -203,11 +199,7 @@ var GlideRecord = Class.create({
         continue;
       }
       if (i + 1 < args.length) {
-        this.conditions.push({
-          name: args[i],
-          oper: '=',
-          value: args[i + 1],
-        });
+        this.conditions.push({ name: args[i], oper: '=', value: args[i + 1] });
         i += 2;
       } else i++;
     }
@@ -231,10 +223,7 @@ var GlideRecord = Class.create({
           var name = field.nodeName;
           var value = getTextValue(field);
           if (!value) value = '';
-          fields.push({
-            name: name,
-            value: value,
-          });
+          fields.push({ name: name, value: value });
         }
         if (cnodes.length && cnodes.length > 0) rows.push(fields);
       }

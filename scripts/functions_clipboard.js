@@ -52,11 +52,7 @@ window.NOW.g_clipboard = {};
       span.setAttribute('data-type', 'info');
       span.setAttribute('data-text', 'Copied to clipboard');
       span.setAttribute('data-duration', '2500');
-      GlideUI.get().fire(
-        new GlideUINotification({
-          xml: span,
-        })
-      );
+      GlideUI.get().fire(new GlideUINotification({ xml: span }));
     }
   }
   function legacyClipboardCopy(meintext) {

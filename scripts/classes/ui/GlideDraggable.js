@@ -148,10 +148,7 @@ var GlideDraggable = Class.create({
       event.pageY = event.clientY;
     }
     if (!this._origPageCoords)
-      this._origPageCoords = {
-        x: event.pageX,
-        y: event.pageY,
-      };
+      this._origPageCoords = { x: event.pageX, y: event.pageY };
     if (!this._origDragElmCoords) {
       var cumulativeOffset = this.dragElem.cumulativeOffset();
       if (this.dragElem.style.right) {
@@ -160,9 +157,7 @@ var GlideDraggable = Class.create({
           this.dragElem.getWidth() -
           parseInt(this.dragElem.style.right, 10) +
           'px';
-        this.dragElem.setStyle({
-          right: '',
-        });
+        this.dragElem.setStyle({ right: '' });
       }
       this._origDragElmCoords = {
         x: parseInt(this.dragElem.style.left, 10) || cumulativeOffset.left,
@@ -170,18 +165,12 @@ var GlideDraggable = Class.create({
       };
     }
     this._shift = !this._pageCoords
-      ? {
-          x: 0,
-          y: 0,
-        }
+      ? { x: 0, y: 0 }
       : {
           x: event.pageX - this._pageCoords.x,
           y: event.pageY - this._pageCoords.y,
         };
-    this._pageCoords = {
-      x: event.pageX,
-      y: event.pageY,
-    };
+    this._pageCoords = { x: event.pageX, y: event.pageY };
     this._dragElmCoords = {
       x:
         this._origDragElmCoords.x +

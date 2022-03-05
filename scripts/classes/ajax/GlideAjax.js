@@ -229,9 +229,7 @@ var GlideAjax = Class.create(GlideURL, {
             ? this.getParam('sysparm_scope')
             : 'global'),
         type: 'system',
-        attributes: {
-          type: 'error',
-        },
+        attributes: { type: 'error' },
       };
       if (typeof GlideUI != 'undefined')
         GlideUI.get().fire(new GlideUINotification(err_options));
@@ -243,9 +241,7 @@ var GlideAjax = Class.create(GlideURL, {
       var err_options = {
         text: this._getCancelErrorText(),
         type: 'system',
-        attributes: {
-          type: 'error',
-        },
+        attributes: { type: 'error' },
       };
       if (typeof GlideUI != 'undefined')
         GlideUI.get().fire(new GlideUINotification(err_options));
@@ -344,15 +340,9 @@ var GlideAjax = Class.create(GlideURL, {
     for (var i = 0; i < spans.length; i++) {
       var span = spans[i];
       if (typeof GlideUI != 'undefined')
-        GlideUI.get().fire(
-          new GlideUINotification({
-            xml: span,
-          })
-        );
+        GlideUI.get().fire(new GlideUINotification({ xml: span }));
     }
-    $(document).fire('glide-notification:clear', {
-      spans: spans,
-    });
+    $(document).fire('glide-notification:clear', { spans: spans });
   },
   _showSessionNotifications: function () {
     if (!this.requestObject || !this.requestObject.responseXML) return;
